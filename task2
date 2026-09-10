@@ -1,0 +1,35 @@
+import math
+
+a = int(input())  #начало
+b = int(input())  #конец
+delta = float(input())  #погрешность
+
+e = math.e
+
+def f(x):
+    return 3 * x - 14 + e ** x - e ** (0-x)
+#мой вариант задания
+
+fa = f(a)
+fb = f(b)
+
+if fa * fb >= 0:
+    raise ValueError("Ошибка, ф-ия должна иметь разные знаки")
+
+while True:
+    # формула метода хорд: x_k = a - f(a)*(b - a) / (f(b) - f(a))
+    k = a - fa * (b - a) / (fb - fa) #точка пересечения с осью
+    fk = f(k)
+    if abs(fk) < delta or abs(b - a) < delta: #условие остановки
+        break
+
+    # замена границы
+    if fa * fk < 0: #корень лежит между А и С
+        b = k
+        fb = fk
+    else:
+        a = k
+        fa = fk
+
+ans = k
+print(ans)
