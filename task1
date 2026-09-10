@@ -1,0 +1,24 @@
+import math
+
+a = int(input())  #начало
+b = int(input())  #конец
+delta = float(input())  #погрешность
+
+e = math.e
+def f(x):
+    return 3 * x - 14 + e ** x - e ** (0-x)
+#мой вариант задания
+if f(a) * f(b) >= 0:
+    raise ValueError("Ошибка, ф-ия должна иметь разные знаки")
+#проверка знака (по пересечению с осью)
+while (b - a) / 2 > delta: #максимальная возможная ошибка
+    c = (a + b) / 2 #серединa текущего отрезка
+    if f(c) == 0: #если корень найден
+        break
+    if f(a) * f(c) < 0: #поиск корня
+        b = c
+    else:
+        a = c
+
+ans = (a + b) / 2
+print(ans)
